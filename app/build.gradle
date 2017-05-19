@@ -1,4 +1,20 @@
 apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'me.tatarka:gradle-retrolambda:3.6.1'
+    }
+}
+
+// Required because retrolambda is on maven central
+repositories {
+    mavenCentral()
+}
 
 android {
     compileSdkVersion 25
@@ -6,7 +22,7 @@ android {
 
     defaultConfig {
         applicationId "beerdroid.oxim.digital.beerdroid"
-        minSdkVersion 25
+        minSdkVersion 24
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -17,6 +33,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+retrolambda {
+    jvmArgs '-noverify'
 }
 
 dependencies {
@@ -25,4 +50,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.3.1'
 
     provided 'com.google.android.things:androidthings:0.4-devpreview'
+
+    compile 'io.reactivex:rxandroid:1.2.1'
 }
