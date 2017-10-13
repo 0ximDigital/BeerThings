@@ -9,7 +9,7 @@ public final class GameClock {
     public GameClock() {
     }
 
-    public Observable<Long> gameClockObervable() {
+    public Observable<Long> gameClockObservable() {
         return Observable.interval(16, TimeUnit.MILLISECONDS);
     }
 }

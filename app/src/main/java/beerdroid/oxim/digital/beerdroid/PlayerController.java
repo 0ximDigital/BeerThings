@@ -1,13 +1,14 @@
 package beerdroid.oxim.digital.beerdroid;
 
 import com.google.android.things.pio.Gpio;
+import com.google.android.things.pio.GpioCallback;
 import com.google.android.things.pio.PeripheralManagerService;
 
 import java.io.IOException;
 
 public final class PlayerController {
 
-    private static final float MOVE_DIFF = 6.f;
+    private static final float MOVE_DIFF = 15.f;
 
     private final Gpio leftButton;
     private final Gpio rightButton;
@@ -23,7 +24,22 @@ public final class PlayerController {
                            final String gpioName) throws IOException {
         final Gpio gpio = peripheralManagerService.openGpio(gpioName);
         gpio.setDirection(Gpio.DIRECTION_IN);
+        gpio.setEdgeTriggerType(Gpio.EDGE_RISING);
         return gpio;
+    }
+
+    public void setFirstKeyCallback(final GpioCallback gpioCallback) {
+        try {
+            leftButton.registerGpioCallback(gpioCallback);
+            rightButton.registerGpioCallback(gpioCallback);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void unregisterCallback(final GpioCallback callback) {
+        leftButton.unregisterGpioCallback(callback);
+        rightButton.unregisterGpioCallback(callback);
     }
 
     public float consumeMovementDiff() {

@@ -4,7 +4,7 @@ import com.google.android.things.pio.PeripheralManagerService;
 
 import java.io.IOException;
 
-public final class PlayerControllerFactory {
+public final class GameControllerFactory {
 
     private static final PeripheralManagerService peripheralService = new PeripheralManagerService();
 
